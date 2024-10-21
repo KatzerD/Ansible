@@ -1,0 +1,9 @@
+---
+# Tareas comunes que podrían ser aplicables a ambos tipos de servidores
+- name: Install common packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - curl
+    - vim

@@ -1,0 +1,33 @@
+---
+- name: Setup Web Servers and Database
+  hosts: webservers
+  become: yes  # Si necesitas privilegios de sudo
+  tasks:
+    - name: Update apt packages
+      apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: Install necessary packages
+      apt:
+        name:
+          - nginx
+          - git
+        state: present
+
+- name: Setup Database
+  hosts: databases
+  become: yes  # Si necesitas privilegios de sudo
+  vars:
+    db_name: mydatabase
+    db_user: prueba  # Cambia esto por el nombre de usuario de tu base de datos
+    db_password: Prueba123.  # Cambia esto por la contraseña de tu base de datos
+
+  tasks:
+    - name: Ensure the database user exists
+      postgresql_user:
+        name: "{{ db_user }}"
+        password: "{{ db_password }}"
+        state: present
+        login_host: "terraform-20241020225137858500000003.cnyg8giqoypk.us-east-1.rds.amazonaws.com"
+        login_port: 5432

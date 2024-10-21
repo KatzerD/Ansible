@@ -1,0 +1,7 @@
+---
+- name: Create PostgreSQL database
+  postgresql_db:
+    name: "{{ db_name }}"
+    state: present
+    login_user: "{{ db_username }}"
+    login_password: "{{ db_password }}"
